@@ -1,0 +1,74 @@
+
+body {
+    text-align: center;
+    background-color: seagreen;
+    color: white;
+    top: 50px;
+}
+
+.menu {
+    list-style: none;
+    display: block;
+    float: left;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+
+.menu ul {
+    position: absolute;
+    /* top:25px;
+    left:0;
+    background-color:#fff; */
+}
+
+.menu li {
+    display: inline-block;
+    padding:5px 10px; 
+}
+
+.menu li a {
+    color:wheat; 
+    text-decoration:none; 
+    
+}
+
+.menu li .left {
+    float: left;
+}
+
+.menu li .right {
+    float: right;
+}
+
+.container {
+    margin: 20px 30px 20px;
+    padding-top: 10vh;
+}
+
+.container form input {
+    padding: 5px;
+    margin: 10px;
+    width: auto;
+}
+
+.container form button {
+    border-radius: 10px;
+    background: wheat;
+    color: rgb(139, 9, 0);
+    border: none;
+}
+
+table {
+    margin: 20px auto;
+    /* margin-top: 15px; */
+    border: 1px solid wheat;
+    border-spacing: 0px;
+}
+
+td {
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    padding: 8px;
+}

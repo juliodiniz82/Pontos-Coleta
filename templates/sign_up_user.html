@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/estilo.css">
+    <title>Página de Cadastro</title>
+</head>
+<body>
+    <div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html">Página Inicial</a></li>
+                <li><a href="mapa.html">Visualizar Pontos</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="sign_up_user.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </div>
+    <br>
+    <div class="container">
+        <h3>Formulário de Cadastro</h3>
+        <form id="signup" method="POST">
+            <input type="text" name="nome" id="nome" placeholder="Nome Completo" required>
+            <br>
+            <input type="date" name="nascimento" id="nascimento" placeholder="dd/mm/aaaa" width="40px" required>
+            <br>
+            <input type="text" name="cpf" id="cpf" placeholder="cpf" required>
+            <br>
+            <input type="text" name="cep" id="cep" placeholder="cep" required>
+            <br>
+            <input type="email" name="email" id="email" placeholder="email@dominio" required>
+            <br>
+            <input type="password" name="senha" id="senha" placeholder="senha" required>
+            <br>
+            <input type="password" name="confirma-senha" id="confirma-senha" placeholder="confirmar senha" required>
+            <br>
+            <button type="submit" name="submit"> Cadastrar </button>
+        </form>
+    </div>
+    <script src="../static/js/scripts.js"></script>
+</body>
+</html>

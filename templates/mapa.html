@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mapa e Rota</title>
+    <link rel="stylesheet" href="../static/css/estilo.css">
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    
+
+</head>
+<body>
+    <nav>
+        <ul class="menu">
+            <li class="left"><a href="index.html">Página Inicial</a></li>
+            <li class="left"><a href="mapa.html">Visualizar Pontos</a></li>
+            <li class="right"><a href="login.html">Login</a></li>
+            <li class="right"><a href="sign_up_user.html">Sign Up</a></li>
+        </ul>
+    </nav>
+    <h1 class="container">Fortaleza</h1>
+    <div style="width: 800px; height: 600px;" id="mapContainer"></div>
+    <script src="../static/js/rota.js"></script>
+
+    <br>
+    <h2>Pontos de Coleta Ativos</h2>
+    <br>
+    <br>
+
+    <table>
+        <!-- Sintaxe do Jinja2 para gerar tags dinamicamente -->
+        {% for a in ativos %}
+            <tr>
+                <td>{{a['endereco']}}</td>
+                <td>{{a['latitude']}}</td>
+                <td>{{a['longitude']}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Sugira um novo ponto</h2>
+    <form method="POST" action="#">
+        <input name="localizacao" type="text" placeholder="Logradouro número">
+        <input name="enviar" type="submit" text="Confirmar">
+    </form>
+
+</body>
+</html>
