@@ -1,5 +1,5 @@
 var platform = new H.service.Platform({
-    'apikey': ''
+    'apikey': 'pp7TK3gVLfq-zsiLcO89nzRwm7aLLwbPDIS1N3F8-vU'
     });
 // Obtain the default map types from the platform object:
 var defaultLayers = platform.createDefaultLayers();
@@ -10,7 +10,7 @@ var map = new H.Map(
     defaultLayers.vector.normal.map,
     {
     zoom: 11.5,
-    // center: { lat: -3.738, lng: -38.5458 }
+    
     center: { lat: -3.80315445, lng: -38.572173 }
     // −
     });
