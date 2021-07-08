@@ -7,15 +7,8 @@ from pickle import loads, dumps
 banco = sqlite3.connect('coleta.db')
 cursor = banco.cursor()
 cursor.execute('CREATE TABLE coleta (dado blob, tipo text)')
+cursor.execute('CREATE TABLE usuario (id integer primary key, nome text, nascimento text, \
+cpf text, cep text, email text, senha text)')
 
-matriz = []
-for i in range(10):
-    matriz.append([])
-    for j in range(10):
-        if random.random() < 0.3:
-            matriz[i].append(0)
-        else:
-            matriz[i].append(1)
-
-cursor.execute("INSERT INTO coleta VALUES (?, ?)", (dumps(matriz), 'mapa'))
-banco.commit()
+cursor.close()
+banco.close()

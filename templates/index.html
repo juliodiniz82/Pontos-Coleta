@@ -9,10 +9,16 @@
 <body>
     <nav>
         <ul class="menu">
-            <li class="left"><a href="index.html">Página Inicial</a></li>
-            <li class="left"><a href="mapa.html">Visualizar Pontos</a></li>
-            <li class="right"><a href="login.html">Login</a></li>
-            <li class="right"><a href="sign_up_user.html">Sign Up</a></li>
+            <li class="left"><a href="{{ url_for('homepage') }}">Página Inicial</a></li>
+            <li class="left"><a href="{{ url_for('rota') }}">Visualizar Pontos</a></li>
+            <!-- Sintaxe do Jinja2 para gerar tags dinamicamente -->
+            {% if current_user.is_authenticated %}
+                <li class="right"><a href="">{{current_user.nome}}</a></li>
+                <li class="right"><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li class="right"><a href="{{ url_for('login') }}">Login</a></li>
+                <li class="right"><a href="{{ url_for('sign_up_user') }}">Sign Up</a></li>
+            {% endif %}
         </ul>
     </nav>
     <br>

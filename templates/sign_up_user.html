@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/estilo.css">
     <title>Página de Cadastro</title>
 </head>
@@ -11,10 +10,16 @@
     <div>
         <nav>
             <ul class="menu">
-                <li><a href="index.html">Página Inicial</a></li>
-                <li><a href="mapa.html">Visualizar Pontos</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="sign_up_user.html">Sign Up</a></li>
+                <li class="left"><a href="{{ url_for('homepage') }}">Página Inicial</a></li>
+                <li class="left"><a href="{{ url_for('rota') }}">Visualizar Pontos</a></li>
+                <!-- Sintaxe do Jinja2 para gerar tags dinamicamente -->
+                {% if current_user.is_authenticated %}
+                    <li class="right"><a href="">{{current_user.nome}}</a></li>
+                    <li class="right"><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="right"><a href="{{ url_for('login') }}">Login</a></li>
+                    <li class="right"><a href="{{ url_for('sign_up_user') }}">Sign Up</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>
@@ -36,9 +41,9 @@
             <br>
             <input type="password" name="confirma-senha" id="confirma-senha" placeholder="confirmar senha" required>
             <br>
-            <button type="submit" name="submit"> Cadastrar </button>
+            <input type="submit" name="cadastro" text="Cadastrar">
         </form>
     </div>
-    <script src="../static/js/scripts.js"></script>
+    <!-- <script src="../static/js/scripts.js"></script> -->
 </body>
 </html>

@@ -3,6 +3,8 @@ from pickle import dumps, loads
 from scipy.spatial.distance import euclidean
 from statistics import mean, stdev
 from base import dict_factory
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash
 
 
 banco = connect('coleta.db')
@@ -80,10 +82,6 @@ class Avaliador():
         cursor.close()
     
     @staticmethod
-    def otimiza_rota(rota):
-        pass
-    
-    @staticmethod
     def ativa_rota(rota):
         
         cursor = banco.cursor()
@@ -106,3 +104,18 @@ class Avaliador():
         cursor.execute("UPDATE coleta SET dado = ? WHERE tipo = 'pontos_sugeridos'", (dumps(pontos_sugeridos),))
         banco.commit()
         cursor.close()
+
+
+# Classe Usuario é necessária para a operação de login padrão do FLask
+class Usuario(UserMixin):
+
+    def __init__(self, **data):
+
+        self.id = data['id']
+        self.nome = data['nome']
+        self.nascimento = data['nascimento']
+        self.cpf = data['cpf']
+        self.cep = data['cep']
+        self.email = data['email']
+        # Criptografa a senha antes de armazená-la no banco
+        self.senha = generate_password_hash(data['senha'])
