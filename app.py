@@ -7,9 +7,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # from resources.resources import *
 from sqlite3 import connect
 from models import *
+from base import dict_factory
 import pickle
 import json
-import pandas as pd
 import geopandas as gpd
 
 
@@ -40,7 +40,7 @@ def ajustar_endereco(endereco):
         endereço alterado para evitar ambiguidades ou localizações fora de Fortaleza
     """
 
-    if 'Fortaleza' in endereco:
+    if 'Fortaleza, CE' in endereco:
         return endereco
     else: 
         return endereco + ', Fortaleza, CE'
@@ -56,13 +56,13 @@ login_manager = LoginManager(app)
 def get_user(user_id):
     banco = connect('coleta.db')
     cursor = banco.cursor()
+    cursor.row_factory = dict_factory
 
     cursor.execute('SELECT * FROM usuario WHERE id = ?', (user_id, ))
     # Tupla que contém os atributos do registro que representa o usuário, 
     # ou None se o email não estiver cadastrado.
     usuario = cursor.fetchone()
-    usuario = Usuario(id=usuario[0], nome=usuario[1], nascimento=usuario[2], cpf=usuario[3], 
-    cep=usuario[4], email=usuario[5], senha=usuario[6])
+    usuario = Usuario(**usuario)
 
     cursor.close()
     banco.close()
@@ -93,9 +93,10 @@ def sign_up_user():
             cursor.execute('SELECT * FROM usuario')
             tam = len(cursor.fetchall())
 
-            cursor.execute('INSERT INTO usuario VALUES (?, ?, ?, ?, ?, ?, ?)', (tam, data['nome'], 
+            # Todos os cadastrados serão considerados administradores até futuras atualizações.
+            cursor.execute('INSERT INTO usuario VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (tam +1 , data['nome'], 
             data['nascimento'], data['cpf'], data['cep'], data['email'], 
-            generate_password_hash(data['senha'])))
+            generate_password_hash(data['senha']), 'administrador'))
             banco.commit()
             cursor.close()
             banco.close()
@@ -114,9 +115,11 @@ def login():
         data = json.loads(json.dumps(request.form))
         banco = connect('coleta.db')
         cursor = banco.cursor()
+        cursor.row_factory = dict_factory
 
         cursor.execute('SELECT * FROM usuario WHERE email = ?', (data['email'], ))
-        # Tupla que contém os atributos do registro que representa o usuário, 
+        
+        # Dicionário que contém os atributos do registro que representa o usuário, 
         # ou None se o email não estiver cadastrado.
         usuario = cursor.fetchone()
 
@@ -126,13 +129,12 @@ def login():
         if usuario is None:
             return render_template('<h1>Usuário não cadastrado</h1>')
         
-        if check_password_hash(usuario[-1], data['senha']):
-            usuario = Usuario(id=usuario[0], nome=usuario[1], nascimento=usuario[2], cpf=usuario[3], 
-            cep=usuario[4], email=usuario[5], senha=usuario[6])
+        if check_password_hash(usuario['senha'], data['senha']):
+            usuario = Usuario(**usuario)
             login_user(usuario)
             return redirect(url_for('rota'))
         else:
-            return render_template('login.html', alerta=json.dumps('Senha inválida'))
+            return render_template('login.html', alerta=json.dumps('Senha incorreta'))
         
     return render_template('login.html')
 
